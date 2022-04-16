@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -104,6 +105,16 @@ public class AdminController {
 		return new ResponseEntity<Product>(temp, HttpStatus.OK);
 
 	}
+	
+	@PutMapping("/products")
+	public String putProduct(@RequestBody Product product) {
+		Product temp = productService.putProduct(product);
+		if (temp == null) {
+			return "Product not updated";
+		}
+		return "Product Updated";
+
+	}
 
 	@GetMapping("/products/{productId}")
 	public ResponseEntity<Product> getProductById(@PathVariable("productId") int id) {
@@ -120,6 +131,16 @@ public class AdminController {
 		productService.deleteProductById(id);
 		return "Product with id="+id+" Deleted";
 	}
+//	
+//	@PutMapping("/products")
+//	public String updateOneProduct(@RequestBody Product product){
+//		// create a rest client
+//		RestTemplate restTemplate = new RestTemplate();
+//		restTemplate.put(PRODUCTS_URI, product);
+//		
+//		// collect and return response
+//		return "Product is updated successfully ";
+//	}
 
 	@GetMapping("/users")
 	public ResponseEntity<List<User>> getAllSignedUpUsers() {

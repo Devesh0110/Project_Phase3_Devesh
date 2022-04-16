@@ -19,6 +19,10 @@ public class ProductService {
 		return productRepository.save(product);
 	}
 	
+	public Product putProduct(Product product) {
+		return productRepository.save(product);
+	}
+	
 	public Product addProductWithUser(Product product) {
 		return productRepository.save(product);
 	}
