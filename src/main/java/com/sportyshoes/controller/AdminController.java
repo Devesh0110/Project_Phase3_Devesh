@@ -19,11 +19,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-
+import com.sportyshoes.model.Admin;
 import com.sportyshoes.model.Product;
 import com.sportyshoes.model.PurchaseReport;
 import com.sportyshoes.model.User;
 import com.sportyshoes.repository.PurchaseReportRepository;
+import com.sportyshoes.service.AdminService;
 import com.sportyshoes.service.ProductService;
 import com.sportyshoes.service.PurchaseReportService;
 import com.sportyshoes.service.UserService;
@@ -37,6 +38,9 @@ public class AdminController {
 
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	AdminService adminService;
 
 	@Autowired
 	private PurchaseReportService purchaseReportService;
@@ -84,7 +88,7 @@ public class AdminController {
 //		return "Product is added successflly ";
 //	}
 
-	@GetMapping("/products/categorize/{category}")
+	@GetMapping("/products/category/{category}")
 	public ResponseEntity<List<Product>> getAllProductsBasedOnCategory(@PathVariable("category") String category) {
 		System.out.println("Category which is being searched is: " + category);
 		List<Product> allProductsBasedOnCategory = productService.getAllProductBasedOnCatogary(category);
@@ -113,6 +117,16 @@ public class AdminController {
 			return "Product not updated";
 		}
 		return "Product Updated";
+
+	}
+	
+	@PutMapping("/changepassword")
+	public String putPass(@RequestBody Admin a) {
+		Admin temp = adminService.putPass(a);
+		if (temp == null) {
+			return "Password not updated";
+		}
+		return "Password Updated";
 
 	}
 
